@@ -35,7 +35,7 @@ class AzureBlobFileUploader:
   def upload_image(self,file_name):
     # Create blob with same name as local file name
     blob_client = self.blob_service_client.get_blob_client(container=MY_IMAGE_CONTAINER,
-                                                          blob=file_name)
+                                                          blob=f"rds/{file_name}")
     # Get full path to the file
     upload_file_path = os.path.join(LOCAL_IMAGE_PATH, file_name)
  
