@@ -101,7 +101,14 @@ export default function ChatBot() {
           ))}
           {loading && <div>Fetching data from LLM...</div>}
         </div>
-        <div style={{ padding: "5px" }}>
+        <div
+          style={{
+            padding: "5px",
+            display: "flex",
+            flexDirection: "column",
+            gap: "0.5rem",
+          }}
+        >
           <textarea
             onChange={(event) => setQuery(event.target.value)}
             value={query}
@@ -111,6 +118,7 @@ export default function ChatBot() {
               await main(query);
               setQuery("");
             }}
+            style={{ marginLeft: "auto", fontSize: "18px", padding: "5px" }}
           >
             Send
           </button>
