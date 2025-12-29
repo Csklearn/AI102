@@ -1,0 +1,368 @@
+#  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#button)Button
+OverviewGuidelinesAPI
+A **Button** is an essential interface element that enable users to perform an action or command by clicking or tapping on them. They can be used for tasks such as completing a process or submitting information.
+**Buttons** are vital interface elements that allow users to perform actions or commands with a click or tap. They can be utilized for tasks such as completing a process or submitting information.
+There are five options for button types:
+  * **Primary Button** - Used for page primary action.
+  * **Secondary Button** - Used alongside primary to reduce visual noise when there are many actions of equal importance on the page, or to support without overpowering for less critical tasks.
+  * **Tertiary Button** - The Tertiary button, with its subtle and transparent background, is used for low-priority actions that require a softer approach. It is very important to only utilize the Tertiary button on solid background designs with our primary and secondary backgrounds. Avoid using this button when overlaying map data or imagery.
+  * **Danger Button** - Used to signal actions that require caution or may have significant consequences, such as deletions or irreversible changes.
+  * **Ghost Button** - Used for less prominent actions where visual clutter needs to be minimized. It can also be used inline because it differs from content in style and is recognizable as a button alongside content. Its hover state adds a nice level of interactivity and visual flair if used properly and sparingly.
+
+
+Primary Button 
+Hide code
+```
+
+
+<RdsButton palette="primary" type="button">
+        Primary Button 
+        
+        
+      </RdsButton>
+
+
+```
+
+Copy
+Name | Description | Default | Control   
+---|---|---|---  
+active |  Sets as active when within a button group or menu. boolean | undefined | FalseTrue  
+palette |  Sets palette type. dangerdanger-liteghostprimarysecondarytertiary | primary | Choose option... danger danger-lite ghost primary secondary tertiary  
+disabled |  Disables the button. boolean | undefined | FalseTrue  
+href |  Sets href url. string | undefined |   
+iconOnly |  Adds styles supporting non-text button. boolean | undefined | FalseTrue  
+label |  Sets label. string | undefined |   
+tooltipText |  Sets tooltip text for non-text button. string | undefined |   
+truncate |  Truncates the text with an ellipsis. boolean | undefined | FalseTrue  
+type |  Sets button type. buttonresetsubmit | button | Choose option... button reset submit  
+size |  Sets size. lgmdsmxl | undefined | Choose option... lg md sm xl  
+target |  Sets href target. _blank_parent_self_top | undefined | Choose option... _blank _parent _self _top  
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#design-usage)Design Usage
+**When to use:**
+  * Triggering an action.
+  * Enabling a "final" action.
+  * Progressing or regressing a user through a step in a flow.
+  * Submitting requested information.
+  * Confirming the completion of a flow or cancelling out of it.
+  * Using tag="a" and href when navigating to another page on the site.
+
+
+**When not to use :**
+  * Taking users to a different part within the same page, instead, use links.
+
+
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#content)Content
+**Do:**
+  * Use sentence case, e.g. This is sentence case.
+  * Omit punctuation, e.g. ! ? .
+  * Use the button label to set expectations for what happens when a button is selected.
+  * Begin the label text with an action verb followed by an object receiving the action.
+
+
+**Don't:**
+  * Use all caps.
+  * Use long or redundant button text.
+  * Use icons for decoration.
+  * Add non-essential words.
+  * Include the action verb when the button is part of navigation or group of buttons, and the verb is repeated.
+
+
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#rds-button)rds-button
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#properties)Properties
+Learn more about [Stencil Properties](https://stenciljs.com/docs/properties).
+Property | Attribute | Description | Type(s) | Default  
+---|---|---|---|---  
+`active` | `active` | Sets as active when within a button group or menu. | `boolean` | `undefined`  
+`appearance` | `appearance` |  **[DEPRECATED]** in favor of palette. Sets appearance type.  
+  
+|  `danger` | `danger-lite` | `ghost` | `primary` | `secondary` | `tertiary` | `'primary'`  
+`disabled` | `disabled` | Disables the button. | `boolean` | `undefined`  
+`formId` | `form-id` | Informs button which specific form to interact with. | `string` | `undefined`  
+`href` | `href` | Sets href url. | `string` | `undefined`  
+`iconOnly` | `icon-only` | Adds styles supporting non-text button. | `boolean` | `undefined`  
+`label` | `label` | Sets label. | `string` | `undefined`  
+`palette` | `palette` | Sets palette type. (`danger-lite` deprecated) |  `danger` | `danger-lite` | `ghost` | `primary` | `secondary` | `tertiary` | `'primary'`  
+`size` | `size` | Sets size. (`xl` deprecated) |  `lg` | `md` | `sm` | `xl` | `undefined`  
+`target` | `target` | Sets href target. |  `_blank` | `_parent` | `_self` | `_top` | `undefined`  
+`tooltipText` | `tooltip-text` | Sets tooltip text for non-text button. | `string` | `undefined`  
+`truncate` | `truncate` | Truncates the text with an ellipsis. | `boolean` | `undefined`  
+`type` | `type` | Sets type attribute. |  `button` | `reset` | `submit` | `'button'`  
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#methods)Methods
+Learn more about [Stencil Methods](https://stenciljs.com/docs/methods).
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#isformvalid--promiseboolean)`isFormValid() => Promise<boolean>`
+Checks closest form's validity from button.
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#returns)Returns
+Type: `Promise<boolean>`
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#reset--promisevoid)`reset() => Promise<void>`
+Resets form elements to initial value if type is 'reset'.
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#returns)Returns
+Type: `Promise<void>`
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#setfocus--promisevoid)`setFocus() => Promise<void>`
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#returns)Returns
+Type: `Promise<void>`
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#slots)Slots
+Learn more about [Web Component slot elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot).
+Slot | Description  
+---|---  
+| Adds content.  
+`"end"` | Adds trailing content.  
+`"start"` | Adds leading content.  
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#css-parts)CSS Parts
+Learn more about [CSS shadow parts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_shadow_parts).
+Part | Description  
+---|---  
+`"button"` | Adds styling to button or anchor element.  
+`"inner"` | Adds styling to content.  
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#dependencies)Dependencies
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#used-by)Used by
+  * [rds-banner](https://rds-storybook.azurewebsites.net/banner)
+  * [rds-comment-box](https://rds-storybook.azurewebsites.net/comment-box)
+  * [rds-date-picker-month-header](https://rds-storybook.azurewebsites.net/date-picker/date-picker-month-header)
+  * [rds-fab](https://rds-storybook.azurewebsites.net/fab)
+  * [rds-modal](https://rds-storybook.azurewebsites.net/modal)
+  * [rds-pagination](https://rds-storybook.azurewebsites.net/pagination)
+  * [rds-panel](https://rds-storybook.azurewebsites.net/panel)
+  * [rds-renewal-card](https://rds-storybook.azurewebsites.net/renewal-card)
+  * [rds-search](https://rds-storybook.azurewebsites.net/search)
+  * [rds-snackbar](https://rds-storybook.azurewebsites.net/snackbar)
+
+
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#graph)Graph
+```
+
+
+
+```
+
+
+graph TD;
+  rds-banner --> rds-button
+  rds-comment-box --> rds-button
+  rds-date-picker-month-header --> rds-button
+  rds-fab --> rds-button
+  rds-modal --> rds-button
+  rds-pagination --> rds-button
+  rds-panel --> rds-button
+  rds-renewal-card --> rds-button
+  rds-search --> rds-button
+  rds-snackbar --> rds-button
+  style rds-button fill:#f9f,stroke:#333,stroke-width:4px
+
+```
+
+Copy
+
+```
+
+* * *
+rds-banner
+rds-button
+rds-comment-box
+rds-date-picker-month-header
+rds-fab
+rds-modal
+rds-pagination
+rds-panel
+rds-renewal-card
+rds-search
+rds-snackbar
+* * *
+_Built for Resilience Design System @ FM._
+<!-- markdownlint-disable-next-line MD042 -->
+[Back to top](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#)
+Table of Contents
+  * [Design Usage](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#design-usage)
+  * [Content](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#content)
+  * [rds-button](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#rds-button)
+  * [Properties](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#properties)
+  * [Methods](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#methods)
+  * [Slots](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#slots)
+  * [CSS Parts](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#css-parts)
+  * [Dependencies](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#dependencies)
+
+
+#  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#button)Button
+OverviewGuidelinesAPI
+A **Button** is an essential interface element that enable users to perform an action or command by clicking or tapping on them. They can be used for tasks such as completing a process or submitting information.
+**Buttons** are vital interface elements that allow users to perform actions or commands with a click or tap. They can be utilized for tasks such as completing a process or submitting information.
+There are five options for button types:
+  * **Primary Button** - Used for page primary action.
+  * **Secondary Button** - Used alongside primary to reduce visual noise when there are many actions of equal importance on the page, or to support without overpowering for less critical tasks.
+  * **Tertiary Button** - The Tertiary button, with its subtle and transparent background, is used for low-priority actions that require a softer approach. It is very important to only utilize the Tertiary button on solid background designs with our primary and secondary backgrounds. Avoid using this button when overlaying map data or imagery.
+  * **Danger Button** - Used to signal actions that require caution or may have significant consequences, such as deletions or irreversible changes.
+  * **Ghost Button** - Used for less prominent actions where visual clutter needs to be minimized. It can also be used inline because it differs from content in style and is recognizable as a button alongside content. Its hover state adds a nice level of interactivity and visual flair if used properly and sparingly.
+
+
+Primary Button 
+Hide code
+```
+
+
+<RdsButton palette="primary" type="button">
+        Primary Button 
+        
+        
+      </RdsButton>
+
+
+```
+
+Copy
+Name | Description | Default | Control   
+---|---|---|---  
+active |  Sets as active when within a button group or menu. boolean | undefined | FalseTrue  
+palette |  Sets palette type. dangerdanger-liteghostprimarysecondarytertiary | primary | Choose option... danger danger-lite ghost primary secondary tertiary  
+disabled |  Disables the button. boolean | undefined | FalseTrue  
+href |  Sets href url. string | undefined |   
+iconOnly |  Adds styles supporting non-text button. boolean | undefined | FalseTrue  
+label |  Sets label. string | undefined |   
+tooltipText |  Sets tooltip text for non-text button. string | undefined |   
+truncate |  Truncates the text with an ellipsis. boolean | undefined | FalseTrue  
+type |  Sets button type. buttonresetsubmit | button | Choose option... button reset submit  
+size |  Sets size. lgmdsmxl | undefined | Choose option... lg md sm xl  
+target |  Sets href target. _blank_parent_self_top | undefined | Choose option... _blank _parent _self _top  
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#design-usage)Design Usage
+**When to use:**
+  * Triggering an action.
+  * Enabling a "final" action.
+  * Progressing or regressing a user through a step in a flow.
+  * Submitting requested information.
+  * Confirming the completion of a flow or cancelling out of it.
+  * Using tag="a" and href when navigating to another page on the site.
+
+
+**When not to use :**
+  * Taking users to a different part within the same page, instead, use links.
+
+
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#content)Content
+**Do:**
+  * Use sentence case, e.g. This is sentence case.
+  * Omit punctuation, e.g. ! ? .
+  * Use the button label to set expectations for what happens when a button is selected.
+  * Begin the label text with an action verb followed by an object receiving the action.
+
+
+**Don't:**
+  * Use all caps.
+  * Use long or redundant button text.
+  * Use icons for decoration.
+  * Add non-essential words.
+  * Include the action verb when the button is part of navigation or group of buttons, and the verb is repeated.
+
+
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#rds-button)rds-button
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#properties)Properties
+Learn more about [Stencil Properties](https://stenciljs.com/docs/properties).
+Property | Attribute | Description | Type(s) | Default  
+---|---|---|---|---  
+`active` | `active` | Sets as active when within a button group or menu. | `boolean` | `undefined`  
+`appearance` | `appearance` |  **[DEPRECATED]** in favor of palette. Sets appearance type.  
+  
+|  `danger` | `danger-lite` | `ghost` | `primary` | `secondary` | `tertiary` | `'primary'`  
+`disabled` | `disabled` | Disables the button. | `boolean` | `undefined`  
+`formId` | `form-id` | Informs button which specific form to interact with. | `string` | `undefined`  
+`href` | `href` | Sets href url. | `string` | `undefined`  
+`iconOnly` | `icon-only` | Adds styles supporting non-text button. | `boolean` | `undefined`  
+`label` | `label` | Sets label. | `string` | `undefined`  
+`palette` | `palette` | Sets palette type. (`danger-lite` deprecated) |  `danger` | `danger-lite` | `ghost` | `primary` | `secondary` | `tertiary` | `'primary'`  
+`size` | `size` | Sets size. (`xl` deprecated) |  `lg` | `md` | `sm` | `xl` | `undefined`  
+`target` | `target` | Sets href target. |  `_blank` | `_parent` | `_self` | `_top` | `undefined`  
+`tooltipText` | `tooltip-text` | Sets tooltip text for non-text button. | `string` | `undefined`  
+`truncate` | `truncate` | Truncates the text with an ellipsis. | `boolean` | `undefined`  
+`type` | `type` | Sets type attribute. |  `button` | `reset` | `submit` | `'button'`  
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#methods)Methods
+Learn more about [Stencil Methods](https://stenciljs.com/docs/methods).
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#isformvalid--promiseboolean)`isFormValid() => Promise<boolean>`
+Checks closest form's validity from button.
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#returns)Returns
+Type: `Promise<boolean>`
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#reset--promisevoid)`reset() => Promise<void>`
+Resets form elements to initial value if type is 'reset'.
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#returns)Returns
+Type: `Promise<void>`
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#setfocus--promisevoid)`setFocus() => Promise<void>`
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#returns)Returns
+Type: `Promise<void>`
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#slots)Slots
+Learn more about [Web Component slot elements](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot).
+Slot | Description  
+---|---  
+| Adds content.  
+`"end"` | Adds trailing content.  
+`"start"` | Adds leading content.  
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#css-parts)CSS Parts
+Learn more about [CSS shadow parts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_shadow_parts).
+Part | Description  
+---|---  
+`"button"` | Adds styling to button or anchor element.  
+`"inner"` | Adds styling to content.  
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#dependencies)Dependencies
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#used-by)Used by
+  * [rds-banner](https://rds-storybook.azurewebsites.net/banner)
+  * [rds-comment-box](https://rds-storybook.azurewebsites.net/comment-box)
+  * [rds-date-picker-month-header](https://rds-storybook.azurewebsites.net/date-picker/date-picker-month-header)
+  * [rds-fab](https://rds-storybook.azurewebsites.net/fab)
+  * [rds-modal](https://rds-storybook.azurewebsites.net/modal)
+  * [rds-pagination](https://rds-storybook.azurewebsites.net/pagination)
+  * [rds-panel](https://rds-storybook.azurewebsites.net/panel)
+  * [rds-renewal-card](https://rds-storybook.azurewebsites.net/renewal-card)
+  * [rds-search](https://rds-storybook.azurewebsites.net/search)
+  * [rds-snackbar](https://rds-storybook.azurewebsites.net/snackbar)
+
+
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#graph)Graph
+```
+
+
+
+```
+
+
+graph TD;
+  rds-banner --> rds-button
+  rds-comment-box --> rds-button
+  rds-date-picker-month-header --> rds-button
+  rds-fab --> rds-button
+  rds-modal --> rds-button
+  rds-pagination --> rds-button
+  rds-panel --> rds-button
+  rds-renewal-card --> rds-button
+  rds-search --> rds-button
+  rds-snackbar --> rds-button
+  style rds-button fill:#f9f,stroke:#333,stroke-width:4px
+
+```
+
+Copy
+
+```
+
+* * *
+rds-banner
+rds-button
+rds-comment-box
+rds-date-picker-month-header
+rds-fab
+rds-modal
+rds-pagination
+rds-panel
+rds-renewal-card
+rds-search
+rds-snackbar
+* * *
+_Built for Resilience Design System @ FM._
+<!-- markdownlint-disable-next-line MD042 -->
+[Back to top](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#)
+Table of Contents
+  * [Design Usage](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#design-usage)
+  * [Content](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#content)
+  * [rds-button](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#rds-button)
+  * [Properties](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#properties)
+  * [Methods](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#methods)
+  * [Slots](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#slots)
+  * [CSS Parts](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#css-parts)
+  * [Dependencies](https://rds-storybook.azurewebsites.net/?path=/docs/components-button-overview--docs#dependencies)
+
+

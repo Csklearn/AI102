@@ -1,0 +1,799 @@
+#  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#core-concepts)Core Concepts
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#what-is-the-resilience-design-system-rds)What is the Resilience Design System (RDS)?
+The Resilience Design System (RDS) is a framework-agnostic library of reusable, standardized [web components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components). These components adhere to HTML standards, making them compatible with popular front-end frameworks such as React, Angular, Vue, and .NET. This framework-agnostic approach empowers teams to efficiently evolve applications while maintaining a high level of quality, enabling consistent design, development, and maintenance of both internal and external web applications.
+The RDS development team is committed to delivering consistency, efficiency, and quality by creating, documenting, maintaining, and rigorously testing components for organizational use.
+RDS components are designed in alignment with FM brand standards. Each component is the result of a collaborative effort between the User Experience (UX) and User Interface Development (UI Dev) teams. This collaboration ensures compliance with [Web Content Accessibility Guidelines (WCAG) 2.1 AA](https://www.w3.org/WAI/WCAG2AA-Conformance), including features such as high color contrast, proper ARIA roles and labels, screen reader compatibility, and enhanced keyboard navigation.
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-development)Component Development
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#stencil)Stencil
+To build RDS components, a compiler called [Stencil](https://stenciljs.com/docs/introduction) is used helping boilerplate the process of creating custom web elements allowing the RDS development team to focus on actually building the components themselves.
+Additionally, Stencil provides a way to [integrate the web components with React](https://stenciljs.com/docs/react) since most FM teams currently use React. Other benefits of using Stencil to build the web components include:
+  * [Adheres to modern web standards](https://stenciljs.com/docs/goals-and-objectives#web-standards)
+  * [Auto-generated component documentation](https://stenciljs.com/docs/docs-readme#docs-readme-markdown-file-auto-generation)
+  * [Automatic optimizations](https://stenciljs.com/docs/goals-and-objectives#automatic-optimizations)
+  * [Consistent UX and branding via the shadow DOM](https://stenciljs.com/docs/styling#shadow-dom)
+  * [Framework features during development](https://stenciljs.com/docs/goals-and-objectives#framework-features-during-development)
+  * [Improved runtime performance](https://stenciljs.com/docs/goals-and-objectives#run-time-performance)
+  * [Lazy-loaded components](https://stenciljs.com/docs/faq#can-stencil-components-be-lazy-loaded)
+  * [Static Site Generation (SSG)](https://stenciljs.com/docs/static-site-generation)
+  * [Strongly-typed development](https://stenciljs.com/docs/faq#why-are-stencil-components-written-with-typescript)
+  * [Wide browser support](https://stenciljs.com/docs/goals-and-objectives#wide-browser-support)
+
+
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#web-components)Web components
+Web components offer a solution by pushing more work to the browser for better performance, and targeting a standards-based component model that all frameworks could use. Additionally, FM wanted to have a UI library that remains agnostic of framework due to the differences between all the apps built. Until this requirement changes, we will continue to stay committed to creating web components for our library.
+The terms `custom elements` and `web components` are used interchangeably and work across modern browsers using any modern JavaScript library or web framework with HTML. Custom elements encapsulate styles preventing cross-contamination with the rest of the application styles.
+RDS components are custom elements and can be used similar to native HTML elements. For instance:
+HTML
+```
+
+
+<rds-button>Click me</rds-button>
+
+
+```
+
+Copy
+JSX
+```
+
+
+<RdsButton>Click me</RdsButton>
+
+
+```
+
+Copy
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#shadow-dom)Shadow DOM
+This article assumes familiarity with the concept of the [DOM (Document Object Model)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) — a tree-like structure of connected nodes that represents the different elements and strings of text appearing in a markup document (usually an HTML document in the case of web documents).
+The [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM) allows elements to have encapsulated DOM trees hiding the attached elements and their styles from the main, or light, DOM. In other words, it provides a way to isolate the markup and styles of a component from the rest of the page, preventing them from being easily affected by styles and scripts externally on the page, and vice versa. This encapsulation helps ensure persistent styling and functionality across applications, enabling a consistent user experience.
+Toggle shadow DOM video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-api)Component API
+  * [CSS Parts](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#css-parts)
+  * [Events](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#events)
+  * [Methods](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#methods)
+  * [Props](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#props)
+  * [Slots](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#slots)
+
+
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#events)Events
+RDS components create and trigger both native and custom [events](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Events). Using the [CustomEvent constructor](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) RDS can promote native events from within the shadow DOM or emit unique data if necessary via the custom event’s [detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#detail) property. Available custom events and descriptions are provided in each component’s API documentation.
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#strategy)Strategy
+  * Move away from creating component specific events (e.g., `rdsModalOpened`, `rdsComboboxChange`, etc.).
+  * Create events that follow native event patterns (e.g., `rdsToggle` vs `toggle`, `rdsChange` vs `change`, etc.).
+  * Because these events are more generic, there may be a need to check where they came from.
+
+
+#####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#identifying-event-origin)Identifying Event Origin
+When using generic events, the component triggering the event can be found by checking the `event.target` property or the event's `detail` object:
+######  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#example-1-using-eventtarget-to-identify-the-source-component)Example 1: Using event.target to identify the source component
+```
+
+
+// Multiple components using the same generic 'change' event
+  <RdsInput onRdsChange={handleChange} id="user-name" />
+  <RdsCombobox onRdsChange={handleChange} id="user-location" />
+  <RdsTextarea onRdsChange={handleChange} id="user-note" />
+
+  const handleChange = (event) => {
+    const { target } = event;
+
+    // Check component type by tagName
+    switch (target.tagName.toLowerCase()) {
+      case 'rds-input':
+        console.debug('Input content changed:', {
+          detail: event.detail,
+          id: event.target.id,
+          tagName: event.target.tagName
+        });
+        break;
+      case 'rds-combobox':
+        console.debug('Combobox content changed:', {
+          detail: event.detail,
+          id: event.target.id,
+          tagName: event.target.tagName
+        });
+        break;
+      case 'rds-textarea':
+        console.debug('Textarea content changed:', {
+          detail: event.detail,
+          id: event.target.id,
+          tagName: event.target.tagName
+        });
+        break;
+    }
+
+    // Check by id
+    if (target.id === 'user-name') {
+      validateUserName(target.value);
+    }
+  };
+
+
+```
+
+Copy
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#usage)Usage
+As with native events, custom events can be captured two ways:
+  1. Binding an event handler to the component similar to how native DOM events are listened for by prepending the camelCased event name with `on` (e.g., `onClick` or `onRdsChange`).
+```
+
+
+<RdsComponent
+   onClick={event => {
+     console.log({ event }); // {event: PointerEvent}
+   }}
+   onRdsChange={event => {
+     console.log({ event }); // {event: CustomEvent}
+   }}
+ />
+
+
+```
+
+Copy
+  2. Using [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
+```
+
+
+document.addEventListener('rdsChange', (event) => {
+   console.log({ event }); // {event: CustomEvent}
+ });
+
+
+```
+
+Copy
+
+Toggle events video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#methods)Methods
+Methods allow you call a publicly exposed method within a component. Available methods and descriptions are provided with each component’s documentation.
+  1. Create a `ref`:
+```
+
+
+const panelRef = useRef<HTMLRdsPanelElement>(null);
+
+
+```
+
+Copy
+  2. Assign the `ref`:
+```
+
+
+<RdsPanel ref={panelRef} />
+
+
+```
+
+Copy
+  3. Call methods on the `ref`:
+```
+
+
+panelRef.current.open();
+
+
+```
+
+Copy
+
+Toggle methods video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#props)Props
+Props are custom attributes/properties exposed publicly on an HTML element. They allow developers to pass data to the component to render or otherwise use. Prop are camelCase when used in TSX/JSX. Available props and descriptions are provided with each component’s documentation.
+```
+
+
+<RdsPanel noPadding={false} />
+
+
+```
+
+Copy
+When using properties in HTML, they are converted to dash-case attributes.
+```
+
+
+<rds-panel no-padding="false"></rds-panel>
+
+
+```
+
+Copy
+Toggle props video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#slots)Slots
+A [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element reflects content into the shadow DOM of the parent web component. Though slots are common in custom web component elements, they are also used in some native elements. For example, the native `select` element uses a default slot to place the `option` elements into its shadow DOM, and each `option` element uses a default slot to place its content into its own shadow DOM.
+![native select shadow DOM example](https://fmzedstcontentrds01.blob.core.windows.net/rds/assets/images/screenshots/native-select-shadow-dom.png)
+Many RDS components also utilize default slots. For instance, the `span` content in the following example is added to the RdsButton’s default slot:
+```
+
+
+<RdsButton appearance="secondary">
+  <span>Button Text</span>
+  <RdsHeroIcon slot="start" />
+</RdsButton>
+
+
+```
+
+Copy
+In many cases, a default slot is all that is needed. However, as components become more complicated, the need arises to position and style child elements differently. This is where named slots come into play. In the example above, an `RdsHeroIcon` is placed into the button’s start slot. This informs the component that the icon should be handled differently than the elements in the default slot.
+If a component has slots, they will be listed in the documentation, such as the slots for rds-page-heading. You can also learn more about slots on MDN.
+Toggle slots video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-styling)Component Styling
+Our components apply CSS via [Tailwind CSS](https://rds-storybook.azurewebsites.net/?path=/docs/foundations-tailwind-css--docs) utility classes, and RDS provides a [Tailwind CSS preset file](https://rds-storybook.azurewebsites.net/?path=/docs/foundations-tailwind-css--docs#tailwind-preset-implementation) to extend an application’s own Tailwind CSS configuration.
+**Note:** To avoid Content Security Policy (CSP) issues and warnings, do not apply inline styles on elements existing outside the shadow DOM. In the light DOM only apply styles using an external stylesheet or via CSS classes.
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#css-custom-properties)CSS Custom Properties
+[CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascading_variables/Using_CSS_custom_properties), also known as `CSS variables` or `design tokens`, are used within RDS to provide a way to theme or modify certain aspects of the design system such as applying colors and typography. Because most RDS components utilize the shadow DOM, styles can not easily be altered externally. However, CSS variables provide one method allowing external applications to alter the component’s internal styles by modifying variable value’s outside of the components.
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#css-parts)CSS Parts
+[CSS parts](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) expose specific elements within the shadow DOM for style customization. Applying overrides to CSS parts requires great consideration and this method should only be utilized when all other attempts do not produce the desired results. There is no way currently to deprecate CSS parts within the components so they may change between versions due to refactoriing causing the overrides to stop working.
+Toggle CSS parts video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#usage-1)Usage
+Select all parts on a page/component, as the following line illustrates:
+```
+
+
+::part(header) {
+  @apply border-neutral-400 border-b p-0;
+}
+
+
+```
+
+Copy
+Or, specify the component name and include pseudo selectors.
+```
+
+
+rds-accordion-item:last-of-type::part(header) {
+  @apply border-none;
+}
+
+
+```
+
+Copy
+Because there may be CSS parts with the same name for different components, it may be helpful to apply a unique class to differentiate the part being targeted from the others:
+```
+
+
+rds-accordion-item.unique-specifier::part(header) {
+  @apply border-none;
+}
+
+
+```
+
+Copy
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#exported-parts)Exported Parts
+When a CSS part within a nested component needs to be accessed from outside the parent component, the part can be exported using the [exportparts](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/exportparts) attribute and accessed externally to the parent component.
+**For example:** rds-accordion-item implements rds-hero-icon and exports parts from the icon as `icon-container`. When attempting to change the rds-hero-icon container inside the rds-accordion-item, the exported part can then be targeted:
+```
+
+
+rds-accordion-item::part(icon-container) {
+  @apply border-none;
+}
+
+
+```
+
+Copy
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-testing)Component Testing
+To properly test in an application using RDS components, transform the application’s ignore patterns by adding the following Jest options in the `package.json`:
+```
+
+
+"jest": {
+  "transformIgnorePatterns": {
+    "<rootDir>/node_modules/(?!(rds-components-react)/)"
+  }
+}
+
+
+```
+
+Copy
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#shadow-dom-testing)Shadow DOM Testing
+`@rds-components-react` components are React-wrapped web components that use the shadow DOM `<ShadowRoot>`. React Testing Library (RTL) does not provide utility functions that traverse beyond the shadow DOM, making it impossible to exclusively use RTL to test @rds-components-react components. In order to test elements within the shadow DOM, we need to use Shadow DOM Testing Library in conjunction with RTL. Shadow DOM Testing Library provides functions with `Shadow` prefixed to the query type (e.g., `getByShadowText()`), which allow us to select and interact with elements within the shadow DOM.
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#sample-component-with-shadow-components)Sample Component with Shadow Components
+Here’s a sample component that uses @rds-components-react components with shadow DOM:
+```
+
+
+import { RdsButton, RdsHeroIcon, RdsModal, RdsPageHeading } from 'rds-components-react';
+
+const TestSample = () => (
+  <div className="p-8 max-w-7xl m-auto">
+    <RdsPageHeading text="Sample Unit Tests for Shadow DOM">
+      <RdsButton slot="action-primary" aria-label="Open Modal">Open Modal</RdsButton>
+    </RdsPageHeading>
+
+    <RdsModal closeButton headline="Headline text" size="sm">
+      <p>
+        Lorem ipsum dolor consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+        officia deserunt mollit anim id est laborum.
+      </p>
+
+      <div slot="footer">
+        <div className="flex justify-between">
+          <RdsButton appearance="tertiary">
+            <RdsHeroIcon name="chevron-left"></RdsHeroIcon>
+            Back
+          </RdsButton>
+
+          <RdsButton>Confirm and Submit</RdsButton>
+        </div>
+      </div>
+    </RdsModal>
+  </div>
+);
+
+export { TestSample };
+
+
+```
+
+Copy
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#example-test-using-shadow-dom-testing-library)Example Test using Shadow-DOM-Testing-Library
+Here’s an example test that uses Shadow-DOM-Testing-Library to test the above component:
+```
+
+
+import { render } from '@testing-library/react';
+import TestSample from './TestSample';
+import userEvent from '@testing-library/user-event';
+
+// 👇 Review the documentation for further usage examples:
+// <https://www.npmjs.com/package/shadow-dom-testing-library#example-usage>
+import { screen } from 'shadow-dom-testing-library';
+
+describe('Sample Shadow tests', () => {
+  it('should contain heading', async () => {
+    render(<TestSample />);
+
+    // Must use this to query RDS shadow DOM.
+    // Must await since Shadow DOM uses JS to inject content.
+    const heading = await screen.findByShadowRole('heading', { name: 'Sample Unit Tests for Shadow DOM' });
+
+    expect(heading).toBeInTheDocument();
+  });
+
+  it('should click modal's close button and then do further check', async () => {
+
+    // This test shows how to use shadowRoot selection to find elements in the ShadowRoot.
+    const user = userEvent.setup();
+    render(
+      <TestSample />
+    );
+
+    // 👇 Open modal for validation
+    const openModal = (await screen.findByLabelText('Open Modal'));
+
+    // 🖱️ Simulated user click
+    await user.click(openModal);
+
+    // 👀 now find the Modal Close button (in the shadow root)
+    //     we need to use shadow here because if you log out the innerHtml of the test that is generated, you will see
+    //     the "Close Modal" is inside of a <ShadowRoot> element. This is the indication you need to pierce into the
+    //     shadow using shadow-testing-library
+    const modalCloseBtn = (await screen.findByShadowLabelText('Close modal'));
+
+    // 🖱️ click the modal close
+    await user.click(modalCloseBtn);
+
+    // 🤌 expect something to happen when modal close button is clicked
+  })
+});
+
+
+```
+
+Copy
+Table of Contents
+#  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#core-concepts)Core Concepts
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#what-is-the-resilience-design-system-rds)What is the Resilience Design System (RDS)?
+The Resilience Design System (RDS) is a framework-agnostic library of reusable, standardized [web components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components). These components adhere to HTML standards, making them compatible with popular front-end frameworks such as React, Angular, Vue, and .NET. This framework-agnostic approach empowers teams to efficiently evolve applications while maintaining a high level of quality, enabling consistent design, development, and maintenance of both internal and external web applications.
+The RDS development team is committed to delivering consistency, efficiency, and quality by creating, documenting, maintaining, and rigorously testing components for organizational use.
+RDS components are designed in alignment with FM brand standards. Each component is the result of a collaborative effort between the User Experience (UX) and User Interface Development (UI Dev) teams. This collaboration ensures compliance with [Web Content Accessibility Guidelines (WCAG) 2.1 AA](https://www.w3.org/WAI/WCAG2AA-Conformance), including features such as high color contrast, proper ARIA roles and labels, screen reader compatibility, and enhanced keyboard navigation.
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-development)Component Development
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#stencil)Stencil
+To build RDS components, a compiler called [Stencil](https://stenciljs.com/docs/introduction) is used helping boilerplate the process of creating custom web elements allowing the RDS development team to focus on actually building the components themselves.
+Additionally, Stencil provides a way to [integrate the web components with React](https://stenciljs.com/docs/react) since most FM teams currently use React. Other benefits of using Stencil to build the web components include:
+  * [Adheres to modern web standards](https://stenciljs.com/docs/goals-and-objectives#web-standards)
+  * [Auto-generated component documentation](https://stenciljs.com/docs/docs-readme#docs-readme-markdown-file-auto-generation)
+  * [Automatic optimizations](https://stenciljs.com/docs/goals-and-objectives#automatic-optimizations)
+  * [Consistent UX and branding via the shadow DOM](https://stenciljs.com/docs/styling#shadow-dom)
+  * [Framework features during development](https://stenciljs.com/docs/goals-and-objectives#framework-features-during-development)
+  * [Improved runtime performance](https://stenciljs.com/docs/goals-and-objectives#run-time-performance)
+  * [Lazy-loaded components](https://stenciljs.com/docs/faq#can-stencil-components-be-lazy-loaded)
+  * [Static Site Generation (SSG)](https://stenciljs.com/docs/static-site-generation)
+  * [Strongly-typed development](https://stenciljs.com/docs/faq#why-are-stencil-components-written-with-typescript)
+  * [Wide browser support](https://stenciljs.com/docs/goals-and-objectives#wide-browser-support)
+
+
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#web-components)Web components
+Web components offer a solution by pushing more work to the browser for better performance, and targeting a standards-based component model that all frameworks could use. Additionally, FM wanted to have a UI library that remains agnostic of framework due to the differences between all the apps built. Until this requirement changes, we will continue to stay committed to creating web components for our library.
+The terms `custom elements` and `web components` are used interchangeably and work across modern browsers using any modern JavaScript library or web framework with HTML. Custom elements encapsulate styles preventing cross-contamination with the rest of the application styles.
+RDS components are custom elements and can be used similar to native HTML elements. For instance:
+HTML
+```
+
+
+<rds-button>Click me</rds-button>
+
+
+```
+
+Copy
+JSX
+```
+
+
+<RdsButton>Click me</RdsButton>
+
+
+```
+
+Copy
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#shadow-dom)Shadow DOM
+This article assumes familiarity with the concept of the [DOM (Document Object Model)](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) — a tree-like structure of connected nodes that represents the different elements and strings of text appearing in a markup document (usually an HTML document in the case of web documents).
+The [shadow DOM](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM) allows elements to have encapsulated DOM trees hiding the attached elements and their styles from the main, or light, DOM. In other words, it provides a way to isolate the markup and styles of a component from the rest of the page, preventing them from being easily affected by styles and scripts externally on the page, and vice versa. This encapsulation helps ensure persistent styling and functionality across applications, enabling a consistent user experience.
+Toggle shadow DOM video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-api)Component API
+  * [CSS Parts](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#css-parts)
+  * [Events](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#events)
+  * [Methods](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#methods)
+  * [Props](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#props)
+  * [Slots](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#slots)
+
+
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#events)Events
+RDS components create and trigger both native and custom [events](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Scripting/Events). Using the [CustomEvent constructor](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent) RDS can promote native events from within the shadow DOM or emit unique data if necessary via the custom event’s [detail](https://developer.mozilla.org/en-US/docs/Web/API/CustomEvent/CustomEvent#detail) property. Available custom events and descriptions are provided in each component’s API documentation.
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#strategy)Strategy
+  * Move away from creating component specific events (e.g., `rdsModalOpened`, `rdsComboboxChange`, etc.).
+  * Create events that follow native event patterns (e.g., `rdsToggle` vs `toggle`, `rdsChange` vs `change`, etc.).
+  * Because these events are more generic, there may be a need to check where they came from.
+
+
+#####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#identifying-event-origin)Identifying Event Origin
+When using generic events, the component triggering the event can be found by checking the `event.target` property or the event's `detail` object:
+######  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#example-1-using-eventtarget-to-identify-the-source-component)Example 1: Using event.target to identify the source component
+```
+
+
+// Multiple components using the same generic 'change' event
+  <RdsInput onRdsChange={handleChange} id="user-name" />
+  <RdsCombobox onRdsChange={handleChange} id="user-location" />
+  <RdsTextarea onRdsChange={handleChange} id="user-note" />
+
+  const handleChange = (event) => {
+    const { target } = event;
+
+    // Check component type by tagName
+    switch (target.tagName.toLowerCase()) {
+      case 'rds-input':
+        console.debug('Input content changed:', {
+          detail: event.detail,
+          id: event.target.id,
+          tagName: event.target.tagName
+        });
+        break;
+      case 'rds-combobox':
+        console.debug('Combobox content changed:', {
+          detail: event.detail,
+          id: event.target.id,
+          tagName: event.target.tagName
+        });
+        break;
+      case 'rds-textarea':
+        console.debug('Textarea content changed:', {
+          detail: event.detail,
+          id: event.target.id,
+          tagName: event.target.tagName
+        });
+        break;
+    }
+
+    // Check by id
+    if (target.id === 'user-name') {
+      validateUserName(target.value);
+    }
+  };
+
+
+```
+
+Copy
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#usage)Usage
+As with native events, custom events can be captured two ways:
+  1. Binding an event handler to the component similar to how native DOM events are listened for by prepending the camelCased event name with `on` (e.g., `onClick` or `onRdsChange`).
+```
+
+
+<RdsComponent
+   onClick={event => {
+     console.log({ event }); // {event: PointerEvent}
+   }}
+   onRdsChange={event => {
+     console.log({ event }); // {event: CustomEvent}
+   }}
+ />
+
+
+```
+
+Copy
+  2. Using [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener).
+```
+
+
+document.addEventListener('rdsChange', (event) => {
+   console.log({ event }); // {event: CustomEvent}
+ });
+
+
+```
+
+Copy
+
+Toggle events video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#methods)Methods
+Methods allow you call a publicly exposed method within a component. Available methods and descriptions are provided with each component’s documentation.
+  1. Create a `ref`:
+```
+
+
+const panelRef = useRef<HTMLRdsPanelElement>(null);
+
+
+```
+
+Copy
+  2. Assign the `ref`:
+```
+
+
+<RdsPanel ref={panelRef} />
+
+
+```
+
+Copy
+  3. Call methods on the `ref`:
+```
+
+
+panelRef.current.open();
+
+
+```
+
+Copy
+
+Toggle methods video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#props)Props
+Props are custom attributes/properties exposed publicly on an HTML element. They allow developers to pass data to the component to render or otherwise use. Prop are camelCase when used in TSX/JSX. Available props and descriptions are provided with each component’s documentation.
+```
+
+
+<RdsPanel noPadding={false} />
+
+
+```
+
+Copy
+When using properties in HTML, they are converted to dash-case attributes.
+```
+
+
+<rds-panel no-padding="false"></rds-panel>
+
+
+```
+
+Copy
+Toggle props video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#slots)Slots
+A [slot](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/slot) element reflects content into the shadow DOM of the parent web component. Though slots are common in custom web component elements, they are also used in some native elements. For example, the native `select` element uses a default slot to place the `option` elements into its shadow DOM, and each `option` element uses a default slot to place its content into its own shadow DOM.
+![native select shadow DOM example](https://fmzedstcontentrds01.blob.core.windows.net/rds/assets/images/screenshots/native-select-shadow-dom.png)
+Many RDS components also utilize default slots. For instance, the `span` content in the following example is added to the RdsButton’s default slot:
+```
+
+
+<RdsButton appearance="secondary">
+  <span>Button Text</span>
+  <RdsHeroIcon slot="start" />
+</RdsButton>
+
+
+```
+
+Copy
+In many cases, a default slot is all that is needed. However, as components become more complicated, the need arises to position and style child elements differently. This is where named slots come into play. In the example above, an `RdsHeroIcon` is placed into the button’s start slot. This informs the component that the icon should be handled differently than the elements in the default slot.
+If a component has slots, they will be listed in the documentation, such as the slots for rds-page-heading. You can also learn more about slots on MDN.
+Toggle slots video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-styling)Component Styling
+Our components apply CSS via [Tailwind CSS](https://rds-storybook.azurewebsites.net/?path=/docs/foundations-tailwind-css--docs) utility classes, and RDS provides a [Tailwind CSS preset file](https://rds-storybook.azurewebsites.net/?path=/docs/foundations-tailwind-css--docs#tailwind-preset-implementation) to extend an application’s own Tailwind CSS configuration.
+**Note:** To avoid Content Security Policy (CSP) issues and warnings, do not apply inline styles on elements existing outside the shadow DOM. In the light DOM only apply styles using an external stylesheet or via CSS classes.
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#css-custom-properties)CSS Custom Properties
+[CSS custom properties](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_cascading_variables/Using_CSS_custom_properties), also known as `CSS variables` or `design tokens`, are used within RDS to provide a way to theme or modify certain aspects of the design system such as applying colors and typography. Because most RDS components utilize the shadow DOM, styles can not easily be altered externally. However, CSS variables provide one method allowing external applications to alter the component’s internal styles by modifying variable value’s outside of the components.
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#css-parts)CSS Parts
+[CSS parts](https://developer.mozilla.org/en-US/docs/Web/CSS/::part) expose specific elements within the shadow DOM for style customization. Applying overrides to CSS parts requires great consideration and this method should only be utilized when all other attempts do not produce the desired results. There is no way currently to deprecate CSS parts within the components so they may change between versions due to refactoriing causing the overrides to stop working.
+Toggle CSS parts video <!-- markdownlint-disable MD034 --> <!-- markdownlint-restore -->
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#usage-1)Usage
+Select all parts on a page/component, as the following line illustrates:
+```
+
+
+::part(header) {
+  @apply border-neutral-400 border-b p-0;
+}
+
+
+```
+
+Copy
+Or, specify the component name and include pseudo selectors.
+```
+
+
+rds-accordion-item:last-of-type::part(header) {
+  @apply border-none;
+}
+
+
+```
+
+Copy
+Because there may be CSS parts with the same name for different components, it may be helpful to apply a unique class to differentiate the part being targeted from the others:
+```
+
+
+rds-accordion-item.unique-specifier::part(header) {
+  @apply border-none;
+}
+
+
+```
+
+Copy
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#exported-parts)Exported Parts
+When a CSS part within a nested component needs to be accessed from outside the parent component, the part can be exported using the [exportparts](https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes/exportparts) attribute and accessed externally to the parent component.
+**For example:** rds-accordion-item implements rds-hero-icon and exports parts from the icon as `icon-container`. When attempting to change the rds-hero-icon container inside the rds-accordion-item, the exported part can then be targeted:
+```
+
+
+rds-accordion-item::part(icon-container) {
+  @apply border-none;
+}
+
+
+```
+
+Copy
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-testing)Component Testing
+To properly test in an application using RDS components, transform the application’s ignore patterns by adding the following Jest options in the `package.json`:
+```
+
+
+"jest": {
+  "transformIgnorePatterns": {
+    "<rootDir>/node_modules/(?!(rds-components-react)/)"
+  }
+}
+
+
+```
+
+Copy
+###  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#shadow-dom-testing)Shadow DOM Testing
+`@rds-components-react` components are React-wrapped web components that use the shadow DOM `<ShadowRoot>`. React Testing Library (RTL) does not provide utility functions that traverse beyond the shadow DOM, making it impossible to exclusively use RTL to test @rds-components-react components. In order to test elements within the shadow DOM, we need to use Shadow DOM Testing Library in conjunction with RTL. Shadow DOM Testing Library provides functions with `Shadow` prefixed to the query type (e.g., `getByShadowText()`), which allow us to select and interact with elements within the shadow DOM.
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#sample-component-with-shadow-components)Sample Component with Shadow Components
+Here’s a sample component that uses @rds-components-react components with shadow DOM:
+```
+
+
+import { RdsButton, RdsHeroIcon, RdsModal, RdsPageHeading } from 'rds-components-react';
+
+const TestSample = () => (
+  <div className="p-8 max-w-7xl m-auto">
+    <RdsPageHeading text="Sample Unit Tests for Shadow DOM">
+      <RdsButton slot="action-primary" aria-label="Open Modal">Open Modal</RdsButton>
+    </RdsPageHeading>
+
+    <RdsModal closeButton headline="Headline text" size="sm">
+      <p>
+        Lorem ipsum dolor consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+        officia deserunt mollit anim id est laborum.
+      </p>
+
+      <div slot="footer">
+        <div className="flex justify-between">
+          <RdsButton appearance="tertiary">
+            <RdsHeroIcon name="chevron-left"></RdsHeroIcon>
+            Back
+          </RdsButton>
+
+          <RdsButton>Confirm and Submit</RdsButton>
+        </div>
+      </div>
+    </RdsModal>
+  </div>
+);
+
+export { TestSample };
+
+
+```
+
+Copy
+####  [](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#example-test-using-shadow-dom-testing-library)Example Test using Shadow-DOM-Testing-Library
+Here’s an example test that uses Shadow-DOM-Testing-Library to test the above component:
+```
+
+
+import { render } from '@testing-library/react';
+import TestSample from './TestSample';
+import userEvent from '@testing-library/user-event';
+
+// 👇 Review the documentation for further usage examples:
+// <https://www.npmjs.com/package/shadow-dom-testing-library#example-usage>
+import { screen } from 'shadow-dom-testing-library';
+
+describe('Sample Shadow tests', () => {
+  it('should contain heading', async () => {
+    render(<TestSample />);
+
+    // Must use this to query RDS shadow DOM.
+    // Must await since Shadow DOM uses JS to inject content.
+    const heading = await screen.findByShadowRole('heading', { name: 'Sample Unit Tests for Shadow DOM' });
+
+    expect(heading).toBeInTheDocument();
+  });
+
+  it('should click modal's close button and then do further check', async () => {
+
+    // This test shows how to use shadowRoot selection to find elements in the ShadowRoot.
+    const user = userEvent.setup();
+    render(
+      <TestSample />
+    );
+
+    // 👇 Open modal for validation
+    const openModal = (await screen.findByLabelText('Open Modal'));
+
+    // 🖱️ Simulated user click
+    await user.click(openModal);
+
+    // 👀 now find the Modal Close button (in the shadow root)
+    //     we need to use shadow here because if you log out the innerHtml of the test that is generated, you will see
+    //     the "Close Modal" is inside of a <ShadowRoot> element. This is the indication you need to pierce into the
+    //     shadow using shadow-testing-library
+    const modalCloseBtn = (await screen.findByShadowLabelText('Close modal'));
+
+    // 🖱️ click the modal close
+    await user.click(modalCloseBtn);
+
+    // 🤌 expect something to happen when modal close button is clicked
+  })
+});
+
+
+```
+
+Copy
+Table of Contents
+  * [What is the Resilience Design System (RDS)?](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#what-is-the-resilience-design-system-rds)
+  * [Component Development](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-development)
+  * [Component API](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-api)
+  * [Component Styling](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-styling)
+  * [Component Testing](https://rds-storybook.azurewebsites.net/?path=/docs/core-concepts--docs#component-testing)
+
+

@@ -1,0 +1,344 @@
+#  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#get-started)Get Started
+The RDS component library includes components, patterns, and page templates to help create your application UI/UX.
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#installation)Installation
+Follow this DevOps [JFrog NPM setup guide](https://fmz-devops-portal.azurewebsites.net/docs/tools/jfrog/Node/jfrog-local-consumption) prior to installation.
+[RDS JFrog artifacts](https://fmartifactory.jfrog.io/ui/packages?name=rds-components&type=packages)
+ReactWeb components
+npmpnpmyarn
+```
+
+
+npm install rds-components-react
+
+
+```
+
+Copy
+```
+
+
+pnpm add rds-components-react
+
+
+```
+
+Copy
+```
+
+
+yarn add rds-components-react
+
+
+```
+
+Copy
+npmpnpmyarn
+```
+
+
+npm install rds-components
+
+
+```
+
+Copy
+```
+
+
+pnpm add rds-components
+
+
+```
+
+Copy
+```
+
+
+yarn add rds-components
+
+
+```
+
+Copy
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#imports)Imports
+Once installed, import the RDS component(s) or resource(s) as you would from any other dependency.
+```
+
+
+import { RdsAppLayout } from 'rds-components-react';
+
+const App = () => <RdsAppLayout></RdsAppLayout>;
+
+export { App };
+
+
+```
+
+Copy
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#upgrading)Upgrading
+When upgrading to a new version of RDS, please review the [changelog](https://rds-storybook.azurewebsites.net/?path=/docs/changelog-version-8-latest--docs) to see what has changed since the version being upgraded from.
+When upgrading to a major version of RDS, take special note of breaking changes to verify if any modifications to the current implementation need to be made. In addition, we provide a [migration guide](https://rds-storybook.azurewebsites.net/?path=/docs/migration-guide--docs) to help mitigate issues due to intended breaking changes.
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-packaging)Scoped Packaging
+A scoped version of the RDS packages is available for use in [module federation](https://webpack.js.org/concepts/module-federation/) contexts as a [Custom Element Registry](https://wicg.github.io/webcomponents/proposals/Scoped-Custom-Element-Registries.html#why-do-developers-need-scoped-custom-element-registries) solution.
+It is identical to the RDS package except that custom tag names resolve to names with a version suffix, e.g., `rds-button-7_7_0`. This allows for multiple versions of RDS in the same federated application, such as a host application on RDS 7.7.1 and a remote application on RDS 7.7.0.
+To maintain a consistent user experience it is recommended to use the newest RDS version across a federated application. In some cases it may be temporarily necessary to use an alternate RDS version with the assumption being that the RDS version would return to the version shared by the federated application once the required changes are implemented.
+**Known limitations:**
+  * **Targeting tag names:** Because tag names are scoped to a specific version, any CSS or tests targeting those tag names will likely no longer work without first updating the targets to include the version suffix, therefore refactoring will by required (e.g., targeting `RdsText` becomes `RdsTextvX_X_X` and `rds-modal:part(backdrop)` becomes `rds-modalvX_X_X::part(backdrop)` where vX_X_X is the version suffix).
+  * **Dependency conflicts:** More than one version of the `rds-components-v-scope-react` dependency cannot exist simultaneously as a dependency in the same package. Consider using package manager workspaces such as [NPM workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces) or [Yarn workspaces](https://yarnpkg.com/features/workspaces) to separate packages allowing for each package to manage it’s own dependencies.
+
+
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-installation)Scoped Installation
+[RDS scoped JFrog artifacts](https://fmartifactory.jfrog.io/ui/packages?name=rds-components-v-scope&type=packages)
+ReactWeb components
+npmpnpmyarn
+```
+
+
+npm install rds-components-v-scope-react
+
+
+```
+
+Copy
+```
+
+
+pnpm add rds-components-v-scope-react
+
+
+```
+
+Copy
+```
+
+
+yarn add rds-components-v-scope-react
+
+
+```
+
+Copy
+npmpnpmyarn
+```
+
+
+npm install rds-components-v-scope
+
+
+```
+
+Copy
+```
+
+
+pnpm add rds-components-v-scope
+
+
+```
+
+Copy
+```
+
+
+yarn add rds-components-v-scope
+
+
+```
+
+Copy
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-imports)Scoped Imports
+Once installed, import the scoped RDS component(s) or resource(s) as you would from any other dependency.
+```
+
+
+import { RdsAppLayout } from 'rds-components-v-scope-react';
+
+const App = () => <RdsAppLayout></RdsAppLayout>;
+
+export { App };
+
+
+```
+
+Copy
+Table of Contents
+  * [Installation](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#installation)
+  * [Imports](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#imports)
+  * [Upgrading](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#upgrading)
+  * [Scoped Packaging](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-packaging)
+  * [Scoped Installation](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-installation)
+  * [Scoped Imports](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-imports)
+
+
+#  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#get-started)Get Started
+The RDS component library includes components, patterns, and page templates to help create your application UI/UX.
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#installation)Installation
+Follow this DevOps [JFrog NPM setup guide](https://fmz-devops-portal.azurewebsites.net/docs/tools/jfrog/Node/jfrog-local-consumption) prior to installation.
+[RDS JFrog artifacts](https://fmartifactory.jfrog.io/ui/packages?name=rds-components&type=packages)
+ReactWeb components
+npmpnpmyarn
+```
+
+
+npm install rds-components-react
+
+
+```
+
+Copy
+```
+
+
+pnpm add rds-components-react
+
+
+```
+
+Copy
+```
+
+
+yarn add rds-components-react
+
+
+```
+
+Copy
+npmpnpmyarn
+```
+
+
+npm install rds-components
+
+
+```
+
+Copy
+```
+
+
+pnpm add rds-components
+
+
+```
+
+Copy
+```
+
+
+yarn add rds-components
+
+
+```
+
+Copy
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#imports)Imports
+Once installed, import the RDS component(s) or resource(s) as you would from any other dependency.
+```
+
+
+import { RdsAppLayout } from 'rds-components-react';
+
+const App = () => <RdsAppLayout></RdsAppLayout>;
+
+export { App };
+
+
+```
+
+Copy
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#upgrading)Upgrading
+When upgrading to a new version of RDS, please review the [changelog](https://rds-storybook.azurewebsites.net/?path=/docs/changelog-version-8-latest--docs) to see what has changed since the version being upgraded from.
+When upgrading to a major version of RDS, take special note of breaking changes to verify if any modifications to the current implementation need to be made. In addition, we provide a [migration guide](https://rds-storybook.azurewebsites.net/?path=/docs/migration-guide--docs) to help mitigate issues due to intended breaking changes.
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-packaging)Scoped Packaging
+A scoped version of the RDS packages is available for use in [module federation](https://webpack.js.org/concepts/module-federation/) contexts as a [Custom Element Registry](https://wicg.github.io/webcomponents/proposals/Scoped-Custom-Element-Registries.html#why-do-developers-need-scoped-custom-element-registries) solution.
+It is identical to the RDS package except that custom tag names resolve to names with a version suffix, e.g., `rds-button-7_7_0`. This allows for multiple versions of RDS in the same federated application, such as a host application on RDS 7.7.1 and a remote application on RDS 7.7.0.
+To maintain a consistent user experience it is recommended to use the newest RDS version across a federated application. In some cases it may be temporarily necessary to use an alternate RDS version with the assumption being that the RDS version would return to the version shared by the federated application once the required changes are implemented.
+**Known limitations:**
+  * **Targeting tag names:** Because tag names are scoped to a specific version, any CSS or tests targeting those tag names will likely no longer work without first updating the targets to include the version suffix, therefore refactoring will by required (e.g., targeting `RdsText` becomes `RdsTextvX_X_X` and `rds-modal:part(backdrop)` becomes `rds-modalvX_X_X::part(backdrop)` where vX_X_X is the version suffix).
+  * **Dependency conflicts:** More than one version of the `rds-components-v-scope-react` dependency cannot exist simultaneously as a dependency in the same package. Consider using package manager workspaces such as [NPM workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces) or [Yarn workspaces](https://yarnpkg.com/features/workspaces) to separate packages allowing for each package to manage it’s own dependencies.
+
+
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-installation)Scoped Installation
+[RDS scoped JFrog artifacts](https://fmartifactory.jfrog.io/ui/packages?name=rds-components-v-scope&type=packages)
+ReactWeb components
+npmpnpmyarn
+```
+
+
+npm install rds-components-v-scope-react
+
+
+```
+
+Copy
+```
+
+
+pnpm add rds-components-v-scope-react
+
+
+```
+
+Copy
+```
+
+
+yarn add rds-components-v-scope-react
+
+
+```
+
+Copy
+npmpnpmyarn
+```
+
+
+npm install rds-components-v-scope
+
+
+```
+
+Copy
+```
+
+
+pnpm add rds-components-v-scope
+
+
+```
+
+Copy
+```
+
+
+yarn add rds-components-v-scope
+
+
+```
+
+Copy
+##  [](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-imports)Scoped Imports
+Once installed, import the scoped RDS component(s) or resource(s) as you would from any other dependency.
+```
+
+
+import { RdsAppLayout } from 'rds-components-v-scope-react';
+
+const App = () => <RdsAppLayout></RdsAppLayout>;
+
+export { App };
+
+
+```
+
+Copy
+Table of Contents
+  * [Installation](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#installation)
+  * [Imports](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#imports)
+  * [Upgrading](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#upgrading)
+  * [Scoped Packaging](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-packaging)
+  * [Scoped Installation](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-installation)
+  * [Scoped Imports](https://rds-storybook.azurewebsites.net/?path=/docs/get-started--docs#scoped-imports)
+
+
