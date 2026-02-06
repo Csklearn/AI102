@@ -1,0 +1,27 @@
+The RDS all the documentations are residing in Azure DevOps WIKI pages and Storybook. 
+
+This PBI is about creating RDS chat bot  by using RAG method.
+
+So , all the documents will be chunked , vectorized and stored in vector DB. 
+Based on user query , documents will be retrieved from Vector DB . Then LLM will review the retrieved documents and will respond back to user.
+
+This chat bot will assist users related to RDS project queries and components.
+
+Approach 1 : (Using Azure Open AI)
+
+Currently in FM we are managing all resources in Azure. So we need to create below resource to develop RAG App.
+
+     Open AI - LLM (Azure Foundary) Hub Project
+     Azure Search - Vector DB
+    
+Approach 2: (Using open source)
+
+     Groq - Serverless LLM 
+     astradb - serverless Vector DB
+
+Supporting package - 
+crawl4AI(Web crawler - crawl and retrieve all documents from WIKI and storybook)
+Langchain /Huggingface-(chunking ,vectorize and storing the documents in vector DB)
+
+Approoach1 - accrues cost.
+Approach 2 - open source
